@@ -1,7 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtraPlugin = require('mini-css-extract-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin');
+const { name } = require('file-loader');
 
 
 module.exports = {
@@ -9,6 +10,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js',
+        assetModuleFilename: 'assets/images/[hash][ext][query]'
     },
     resolve: {
         extensions: ['.js']
@@ -28,6 +30,17 @@ module.exports = {
                 'css-loader',
                 'stylus-loader'
                 ],
+            },
+            {
+                test: /\.png/, 
+                type: 'asset/resource'
+            },
+            {
+                test: /\.(woff|woff2)$/,
+                type: "asset/resource",
+                generator: {
+                  filename: "assets/fonts/[name][ext]"
+                }
             }
             
         ]
